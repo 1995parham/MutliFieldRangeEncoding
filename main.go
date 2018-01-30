@@ -11,6 +11,7 @@
 package main
 
 import (
+	"fmt"
 	"sort"
 
 	"github.com/AUTProjects/MutliFieldRangeEncoding/geo"
@@ -71,4 +72,34 @@ func main() {
 		}
 	}
 
+	regions := make([]geo.Region, 0)
+
+	for i := 0; i < len(xr); i++ {
+		for j := 0; j < len(yr); j++ {
+			regions = append(regions, geo.Region{
+				X: xr[i],
+				Y: yr[j],
+			})
+		}
+	}
+
+	ers := make(map[string]geo.ElementaryRegion)
+
+	for _, region := range regions {
+		cw := ""
+		fmt.Println(region)
+		for _, rule := range rules {
+			if region.X.Start >= rule.X1 && region.X.End <= rule.X2 {
+				if region.Y.Start >= rule.Y1 && region.Y.End <= rule.Y2 {
+					cw += "1"
+				} else {
+					cw += "0"
+				}
+			} else {
+				cw += "0"
+			}
+		}
+		fmt.Println(cw)
+	}
+	fmt.Println(ers)
 }
