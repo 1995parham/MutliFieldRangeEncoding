@@ -22,3 +22,9 @@ type Region struct {
 type ElementaryRegion struct {
 	Regions []Region
 }
+
+// RegionSet represents each rule and its associated elementary regions
+type RegionSet struct {
+	ERs []ElementaryRegion
+	VRs []int
+}
