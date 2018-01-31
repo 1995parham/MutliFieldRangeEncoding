@@ -87,7 +87,6 @@ func main() {
 
 	for _, region := range regions {
 		cw := ""
-		fmt.Println(region)
 		for _, rule := range rules {
 			if region.X.Start >= rule.X1 && region.X.End <= rule.X2 {
 				if region.Y.Start >= rule.Y1 && region.Y.End <= rule.Y2 {
@@ -99,7 +98,19 @@ func main() {
 				cw += "0"
 			}
 		}
-		fmt.Println(cw)
+		er, ok := ers[cw]
+		if ok {
+			er.Regions = append(er.Regions, region)
+			ers[cw] = er
+		} else {
+			ers[cw] = geo.ElementaryRegion{
+				Regions: []geo.Region{
+					region,
+				},
+			}
+		}
 	}
-	fmt.Println(ers)
+	for cw, er := range ers {
+		fmt.Printf("%s -> %d\n", cw, len(er.Regions))
+	}
 }
