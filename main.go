@@ -113,4 +113,18 @@ func main() {
 	for cw, er := range ers {
 		fmt.Printf("%s -> %d\n", cw, len(er.Regions))
 	}
+
+	for i := range rules {
+		rs := geo.RegionSet{
+			ERs: make([]geo.ElementaryRegion, 0),
+		}
+
+		for cw, er := range ers {
+			if cw[i] == '1' {
+				rs.ERs = append(rs.ERs, er)
+			}
+		}
+
+		fmt.Println(len(rs.ERs))
+	}
 }
